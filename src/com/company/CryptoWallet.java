@@ -45,11 +45,6 @@ public class CryptoWallet implements Wallet {
     }
 
     @Override
-    public void showBalance() {
-        System.out.println("Your current balance - " + balance);
-    }
-
-    @Override
     public String toString() {
         return "Crypto Wallet: " +
                 "Balance = " + balance +

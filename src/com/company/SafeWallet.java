@@ -29,11 +29,6 @@ public class SafeWallet implements Wallet {
     }
 
     @Override
-    public void showBalance() {
-        System.out.println("Your current balance - " + balance);
-    }
-
-    @Override
     public String toString() {
         return "Safe Wallet: " +
                 "Balance = " + balance +
