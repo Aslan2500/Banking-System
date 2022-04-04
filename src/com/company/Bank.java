@@ -9,7 +9,7 @@ public class Bank {
 
     public void createAccount(User user, int password) {
         if (map.containsKey(user.getId())) {
-            throw new IllegalArgumentException("User already exists");
+            throw new IllegalArgumentException("You already have tan account");
         }
         Account account = new Account(user, password);
         map.put(user.getId(), account);
@@ -41,6 +41,8 @@ public class Bank {
 
     public void passwordValidation(int id, int pass) {
         Account ac = map.get(id);
-        ac.passwordValidation(pass);
+        if (ac.getPassword() != pass) {
+            throw new IllegalArgumentException("Wrong password");
+        }
     }
 }
