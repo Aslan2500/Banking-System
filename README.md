@@ -1,19 +1,16 @@
 # Banking-System
 So, this Project would help me to master my Java skills
 
-The idea is to create small program which would have following features:
-1) Create bank account (with login and password)
-2) Delete account
-2) Deposit and withdraw money from his/her account
-3) Show balance
-/Functionality could be updated/
+The idea is to create small Banking program which would have following features:
+1) You can add your personal account in the banking system. Account would contain your Name, your personal unique id and your own password
+2) Each Account has two wallets - crypto wallet and safe wallet
+3) You can deposit money to each wallet separately
+4) You can buy crypto to your crypto wallet
+5) You can withdraw your money
+6) You can delete your account from the system
 
-When someone is trying to create account he would have to Enter his name, id number and password for the account
-there could be only one account for each user
-I assume that there is no people with the same id
 
-Also, by adding id and password person can delete his/her account in our banking system
-
-For each option customer has to identify himself/herself, so the program could find his/her account in the system
-Then, program ask customer to enter password
+At each step program asks you to enter your id and password just to make sure that no other person can get access to your money
+Program has validation system, so if you would try to enter wrong password, wrong id, try to withdraw more money than in your balance
+program would throw an exception. 
 
