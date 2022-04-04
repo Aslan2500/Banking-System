@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CryptoWallet implements Wallet {
     private int balance;
-    private Map<String, Integer> crypto = new HashMap<>();
+    private final Map<String, Integer> crypto = new HashMap<>();
 
     @Override
     public void addMoney(int amountToAdd) {
