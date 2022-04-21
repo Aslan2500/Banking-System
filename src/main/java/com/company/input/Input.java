@@ -1,4 +1,4 @@
-package com.company;
+package com.company.input;
 
 public interface Input {
     String askString(String question);

@@ -1,4 +1,6 @@
-package com.company;
+package com.company.output;
+
+import com.company.output.Output;
 
 public class ConsoleOutput implements Output {
     @Override

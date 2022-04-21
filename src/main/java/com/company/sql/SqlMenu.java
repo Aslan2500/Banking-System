@@ -1,4 +1,8 @@
-package com.company;
+package com.company.sql;
+
+import com.company.Account;
+import com.company.firstMenu.Menu;
+import com.company.User;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -7,6 +11,9 @@ import java.util.Properties;
 public class SqlMenu implements Menu, AutoCloseable {
 
     private Connection cn;
+
+    public SqlMenu() {
+    }
 
     public SqlMenu(Connection cn) {
         this.cn = cn;
@@ -35,17 +42,19 @@ public class SqlMenu implements Menu, AutoCloseable {
     }
     
     @Override
-    public boolean createAccount(User user, int password) {
+    public Account createAccount(User user, int password) {
+        Account account = null;
         try (PreparedStatement statement =
                      cn.prepareStatement("INSERT INTO accounts(name, usersID, password) VALUES (?, ?, ?);")) {
             statement.setString(1, user.getName());
             statement.setInt(2, user.getId());
             statement.setInt(3, password);
             statement.execute();
+            account = new Account(user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return account;
     }
 
     @Override

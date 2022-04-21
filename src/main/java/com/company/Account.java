@@ -2,8 +2,8 @@ package com.company;
 
 public class Account {
     private final User user;
-    private final CryptoWallet cryptoWallet = new CryptoWallet();
     private final SafeWallet safeWallet = new SafeWallet();
+    private final Wallet cryptoWallet = new CryptoWallet();
     private final int password;
 
     public Account(User user, int password) {
@@ -15,7 +15,7 @@ public class Account {
         return safeWallet;
     }
 
-    public CryptoWallet getCryptoWallet() {
+    public Wallet getCryptoWallet() {
         return cryptoWallet;
     }
 

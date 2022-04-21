@@ -1,4 +1,6 @@
-package com.company;
+package com.company.input;
+
+import com.company.input.Input;
 
 import java.util.Scanner;
 
@@ -8,13 +10,12 @@ public class ConsoleInput implements Input {
 
     @Override
     public String askString(String question) {
-        System.out.println(question);
+        System.out.print(question);
         return scanner.nextLine();
     }
 
     @Override
     public int askInt(String question) {
-        System.out.println(question);
         return Integer.parseInt(askString(question));
     }
 }

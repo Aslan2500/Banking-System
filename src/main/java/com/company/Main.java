@@ -24,12 +24,12 @@ public class Main {
                 case 2 -> {
                     int[] arr = nameAndId();
                     Account acc = bank.myAccount(arr[0], arr[1]);
-                    CryptoWallet cryptoWallet = acc.getCryptoWallet();
-                    cryptoWallet.getBalance();
-                    System.out.print("How much would you like to spend? ");
-                    int am = sc.nextInt();
-                    String rsl = chooseCrypto();
-                    cryptoWallet.buyCrypto(am, rsl);
+//                    CryptoWallet cryptoWallet = acc.getCryptoWallet();
+//                    cryptoWallet.getBalance();
+//                    System.out.print("How much would you like to spend? ");
+//                    int am = sc.nextInt();
+//                    String rsl = chooseCrypto();
+//                    cryptoWallet.buyCrypto(am, rsl);
                 }
                 case 3 -> {
                     int[] arr = nameAndId();

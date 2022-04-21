@@ -1,4 +1,4 @@
-package com.company;
+package com.company.output;
 
 public interface Output {
     void println(Object obj);

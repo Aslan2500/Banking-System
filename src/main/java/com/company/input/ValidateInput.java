@@ -1,4 +1,6 @@
-package com.company;
+package com.company.input;
+
+import com.company.output.Output;
 
 //Шаблон Декоратор
 public class ValidateInput extends ConsoleInput {
