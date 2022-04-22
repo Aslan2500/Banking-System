@@ -11,6 +11,10 @@ public class Account {
         this.password = password;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public SafeWallet getSafeWallet() {
         return safeWallet;
     }

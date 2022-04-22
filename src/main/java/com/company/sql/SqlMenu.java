@@ -45,7 +45,8 @@ public class SqlMenu implements Menu, AutoCloseable {
     public Account createAccount(User user, int password) {
         Account account = null;
         try (PreparedStatement statement =
-                     cn.prepareStatement("INSERT INTO accounts(name, usersID, password) VALUES (?, ?, ?);")) {
+                     cn.prepareStatement("INSERT INTO accounts(name, usersID, password," +
+                             " amountOfMoney, amountOfBitcoin) VALUES (?, ?, ?, 0, 0);")) {
             statement.setString(1, user.getName());
             statement.setInt(2, user.getId());
             statement.setInt(3, password);

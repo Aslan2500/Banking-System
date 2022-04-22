@@ -1,14 +1,16 @@
 package com.company;
 
+import java.util.List;
+
 public interface OptionsForAccount {
 
-    boolean depositMoney(int amountOfMoney);
+    boolean depositMoney(int amountOfMoney, Account account);
 
-    boolean withdrawMoney(int amountOfMoney);
+    boolean withdrawMoney(int amountOfMoney, Account account);
 
-    boolean buyCrypto(int amountOfMoney);
+    boolean buyCrypto(int amountOfMoney, Account account, double bitcoinPrice);
 
-    boolean sellCrypto(int amountOfMoney);
+    boolean sellCrypto(double bitcoinPrice, double amountOfBitcoin, Account account);
 
-    int showBalance();
+    List<Integer> showBalance(Account account);
 }
