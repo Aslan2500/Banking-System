@@ -38,7 +38,7 @@ public class Start {
             run1 = false;
         }
         while (run2) {
-            this.shoOptions(options);
+            this.showOptions(options);
             int select = input.askInt("Select: ");
             if (select < 0 || select >= options.size()) {
                 out.println("Wrong input, you can select: 0 .. " + (options.size() - 1));
@@ -56,7 +56,7 @@ public class Start {
         }
     }
 
-    private void shoOptions(List<UserOption> options) {
+    private void showOptions(List<UserOption> options) {
         out.println("Options:");
         for (int index = 0; index < options.size(); index++) {
             out.println(index + ". " + options.get(index).name());

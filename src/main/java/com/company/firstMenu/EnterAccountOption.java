@@ -24,7 +24,7 @@ public class EnterAccountOption implements UserActionInMenu {
         out.println("=============Enter Account=============");
         String name = input.askString("Enter your name: ");
         int id = input.askInt("Enter your ID: ");
-        String password = input.askString("Create password: ");
+        String password = input.askString("Enter password: ");
         User user = new User(name, id);
         return menu.enterAccount(user, password);
     }

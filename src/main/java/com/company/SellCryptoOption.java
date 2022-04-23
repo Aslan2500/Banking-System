@@ -19,7 +19,7 @@ public class SellCryptoOption implements UserOption {
     public boolean execute(Input input, OptionsForAccount options, Account account) {
         out.println("=============Sell Crypto=============");
         double toSell = input.askDouble("How much Bitcoin would you like to sell: ");
-        double price = input.askDouble("Bitcoin price: ");
+        int price = input.askInt("Bitcoin price: ");
         return options.sellCrypto(price, toSell, account);
     }
 }
