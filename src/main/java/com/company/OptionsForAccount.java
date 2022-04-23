@@ -12,5 +12,5 @@ public interface OptionsForAccount {
 
     boolean sellCrypto(int bitcoinPrice, double amountOfBitcoin, Account account);
 
-    List<Integer> showBalance(Account account);
+    List<String> showBalance(Account account);
 }

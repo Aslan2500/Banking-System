@@ -20,7 +20,7 @@ public class ShowBalanceOption implements UserOption {
     @Override
     public boolean execute(Input input, OptionsForAccount options, Account account) {
         out.println("=============Show Balance=============");
-        List<Integer> list = options.showBalance(account);
+        List<String> list = options.showBalance(account);
         out.println("Money on balance " + list.get(0));
         out.println("Bitcoin on balance " + list.get(1));
         return true;

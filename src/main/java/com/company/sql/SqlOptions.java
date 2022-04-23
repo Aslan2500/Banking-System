@@ -108,18 +108,19 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
     }
 
     @Override
-    public List<Integer> showBalance(Account account) {
-        List<Integer> list = new ArrayList<>();
+    public List<String> showBalance(Account account) {
+        List<String> list = new ArrayList<>();
         try (PreparedStatement statement =
                      cn.prepareStatement("SELECT amountOfMoney, " +
                              "amountOfBitcoin FROM accounts " +
                              "WHERE usersID = ?;")) {
             statement.setInt(1, account.getUser().getId());
-            statement.setInt(5, account.getUser().getId());
             statement.execute();
             try (ResultSet resultSet = statement.executeQuery()) {
-                list.add(resultSet.getInt("amountOfMoney"));
-                list.add(resultSet.getInt("amountOfBitcoin"));
+                while (resultSet.next()) {
+                    list.add(String.valueOf(resultSet.getInt("amountOfMoney")));
+                    list.add(String.valueOf(resultSet.getDouble("amountOfBitcoin")));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
