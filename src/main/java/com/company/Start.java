@@ -7,10 +7,10 @@ import com.company.firstMenu.UserActionInMenu;
 import com.company.input.ConsoleInput;
 import com.company.input.Input;
 import com.company.input.ValidateInput;
+import com.company.options.*;
 import com.company.output.ConsoleOutput;
 import com.company.output.Output;
-import com.company.sql.SqlMenu;
-import com.company.sql.SqlOptions;
+import com.company.firstMenu.SqlMenu;
 
 import java.util.List;
 

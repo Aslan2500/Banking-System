@@ -1,4 +1,6 @@
-package com.company;
+package com.company.options;
+
+import com.company.Account;
 
 import java.util.List;
 

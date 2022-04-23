@@ -1,5 +1,6 @@
-package com.company;
+package com.company.options;
 
+import com.company.Account;
 import com.company.input.Input;
 
 public interface UserOption {

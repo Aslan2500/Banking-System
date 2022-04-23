@@ -1,7 +1,6 @@
-package com.company.sql;
+package com.company.options;
 
 import com.company.Account;
-import com.company.OptionsForAccount;
 
 import java.io.InputStream;
 import java.sql.Connection;
