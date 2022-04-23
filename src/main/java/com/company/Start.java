@@ -37,6 +37,9 @@ public class Start {
             account = action.execute(input, memTracker);
             run1 = false;
         }
+        if (account == null) {
+            run2 = false;
+        }
         while (run2) {
             this.showOptions(options);
             int select = input.askInt("Select: ");

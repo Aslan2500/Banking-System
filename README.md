@@ -1,16 +1,21 @@
 # Banking-System
-So, this Project would help me to master my Java skills
+This program represents small Banking System with several options
 
-The idea is to create small Banking program which would have following features:
-1) You can add your personal account in the banking system. Account would contain your Name, your personal unique id and your own password
-2) Each Account has two wallets - crypto wallet and safe wallet
-3) You can deposit money to each wallet separately
-4) You can buy crypto to your crypto wallet
-5) You can withdraw your money
-6) You can delete your account from the system
+Program connected with PostgreSQL database, so each created account saves into the database
 
+Also, database include all information about account - password, users name, 
+users ID (Passport number and series), amount of money on balance and amount of Bitcoin
 
-At each step program asks you to enter your id and password just to make sure that no other person can get access to your money
-Program has validation system, so if you would try to enter wrong password, wrong id, try to withdraw more money than in your balance
-program would throw an exception. 
+How user see program:
+Firstly, program offer customer to enter account or create new account if he/she doesn't have one
+These options requires - name, ID and password. 
 
+Then, program offer following options:
+1) Deposit money - program asks how much money you want to deposit
+2) Withdraw money - program asks how much money you want to withdraw (if you don't have enough money then nothing happens)
+3) Buy cryptocurrency - program asks how much money you want to spend from your account and asks for current Bitcoin price
+4) Sell cryptocurrency - program asks how much crypto you want to sell and asks for current Bitcoin price
+5) Show balance - program shows how much money and Bitcoin you have on your account
+6) Exit - finishes program
+
+You can see Flowchart in order to see process is made. [Flowachar](Flowchart.jpg)
