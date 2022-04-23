@@ -39,12 +39,12 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
     }
 
     @Override
-    public boolean depositMoney(int amountOfMoney, Account account) {
+    public boolean depositMoney(double amountOfMoney, Account account) {
         boolean rsl = true;
         try (PreparedStatement statement =
                      cn.prepareStatement("UPDATE accounts set amountOfMoney = amountOfMoney + ? " +
                              "WHERE usersID = ?;")) {
-            statement.setInt(1, amountOfMoney);
+            statement.setDouble(1, amountOfMoney);
             statement.setInt(2, account.getUser().getId());
             rsl = statement.execute();
         } catch (Exception e) {
@@ -54,13 +54,13 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
     }
 
     @Override
-    public boolean withdrawMoney(int amountOfMoney, Account account) {
+    public boolean withdrawMoney(double amountOfMoney, Account account) {
         boolean rsl = true;
         try (PreparedStatement statement =
                      cn.prepareStatement("UPDATE accounts set amountOfMoney = amountOfMoney - ? " +
                              "WHERE amountOfMoney >= ? AND usersID = ?;")) {
-            statement.setInt(1, amountOfMoney);
-            statement.setInt(2, amountOfMoney);
+            statement.setDouble(1, amountOfMoney);
+            statement.setDouble(2, amountOfMoney);
             statement.setInt(3, account.getUser().getId());
             rsl = statement.execute();
         } catch (Exception e) {
@@ -70,14 +70,14 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
     }
 
     @Override
-    public boolean buyCrypto(int amountOfMoney, Account account, double bitcoinPrice) {
+    public boolean buyCrypto(double amountOfMoney, Account account, double bitcoinPrice) {
         boolean rsl = true;
         try (PreparedStatement statement =
                      cn.prepareStatement("UPDATE accounts set amountOfMoney = amountOfMoney - ?, " +
                              "amountOfBitcoin = amountOfBitcoin + (? / ?) " +
                              "WHERE amountOfMoney > ? AND usersID = ?;")) {
-            statement.setInt(1, amountOfMoney);
-            statement.setInt(2, amountOfMoney);
+            statement.setDouble(1, amountOfMoney);
+            statement.setDouble(2, amountOfMoney);
             statement.setDouble(3, bitcoinPrice);
             statement.setDouble(4, amountOfMoney);
             statement.setInt(5, account.getUser().getId());
@@ -96,8 +96,8 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
                              " amountOfMoney = amountOfMoney + (? * ?)" +
                              " WHERE amountOfBitcoin >= ? AND usersID = ?;")) {
             statement.setDouble(1, amountOfBitcoin);
-            statement.setInt(2, (int) amountOfBitcoin);
-            statement.setDouble(3, (int) bitcoinPrice);
+            statement.setDouble(2, amountOfBitcoin);
+            statement.setDouble(3, bitcoinPrice);
             statement.setDouble(4, amountOfBitcoin);
             statement.setInt(5, account.getUser().getId());
             rsl = statement.execute();

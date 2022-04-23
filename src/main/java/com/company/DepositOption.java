@@ -18,7 +18,7 @@ public class DepositOption implements UserOption {
     @Override
     public boolean execute(Input input, OptionsForAccount options, Account account) {
         out.println("=============Deposit Money=============");
-        int money = input.askInt("Enter money: ");
+        double money = input.askDouble("Enter money: ");
         return options.depositMoney(money, account);
     }
 }

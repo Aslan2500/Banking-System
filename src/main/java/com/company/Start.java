@@ -29,7 +29,10 @@ public class Start {
         while (run1) {
             this.showMenu(actions);
             int select = input.askInt("Select: ");
-            if (extracted(actions, select)) continue;
+            if (select < 0 || select >= actions.size()) {
+                out.println("Wrong input, you can select: 0 .. " + (actions.size() - 1));
+                continue;
+            }
             UserActionInMenu action = actions.get(select);
             account = action.execute(input, memTracker);
             run1 = false;
@@ -37,19 +40,13 @@ public class Start {
         while (run2) {
             this.shoOptions(options);
             int select = input.askInt("Select: ");
-            if (extracted(actions, select)) continue;
+            if (select < 0 || select >= options.size()) {
+                out.println("Wrong input, you can select: 0 .. " + (options.size() - 1));
+                continue;
+            }
             UserOption option = options.get(select);
             run2 = option.execute(input, ofa, account);
         }
-    }
-
-    private boolean extracted(List<UserActionInMenu> actions, int select) {
-        boolean rsl = false;
-        if (select < 0 || select >= actions.size()) {
-            out.println("Wrong input, you can select: 0 .. " + (actions.size() - 1));
-            rsl = true;
-        }
-        return rsl;
     }
 
     private void showMenu(List<UserActionInMenu> actions) {

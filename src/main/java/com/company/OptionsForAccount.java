@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface OptionsForAccount {
 
-    boolean depositMoney(int amountOfMoney, Account account);
+    boolean depositMoney(double amountOfMoney, Account account);
 
-    boolean withdrawMoney(int amountOfMoney, Account account);
+    boolean withdrawMoney(double amountOfMoney, Account account);
 
-    boolean buyCrypto(int amountOfMoney, Account account, double bitcoinPrice);
+    boolean buyCrypto(double amountOfMoney, Account account, double bitcoinPrice);
 
     boolean sellCrypto(double bitcoinPrice, double amountOfBitcoin, Account account);
 
