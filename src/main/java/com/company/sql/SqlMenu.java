@@ -42,14 +42,14 @@ public class SqlMenu implements Menu, AutoCloseable {
     }
     
     @Override
-    public Account createAccount(User user, int password) {
+    public Account createAccount(User user, String password) {
         Account account = null;
         try (PreparedStatement statement =
                      cn.prepareStatement("INSERT INTO accounts(name, usersID, password," +
                              " amountOfMoney, amountOfBitcoin) VALUES (?, ?, ?, 0, 0);")) {
             statement.setString(1, user.getName());
             statement.setInt(2, user.getId());
-            statement.setInt(3, password);
+            statement.setString(3, password);
             statement.execute();
             account = new Account(user, password);
         } catch (Exception e) {
@@ -59,19 +59,19 @@ public class SqlMenu implements Menu, AutoCloseable {
     }
 
     @Override
-    public Account enterAccount(User user, int password) {
+    public Account enterAccount(User user, String password) {
         Account account = null;
         try (PreparedStatement statement =
                      cn.prepareStatement("SELECT * FROM accounts WHERE usersID = ? AND password = ?;")) {
             statement.setInt(1, user.getId());
-            statement.setInt(2, password);
+            statement.setString(2, password);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     account = new Account(
                             new User(
                                     resultSet.getString("name"),
                                     resultSet.getInt("usersID")),
-                            resultSet.getInt("password"));
+                            resultSet.getString("password"));
                 }
             }
         } catch (Exception e) {

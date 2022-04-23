@@ -24,7 +24,7 @@ public class CreateAccountOption implements UserActionInMenu {
         out.println("=============Create new Account=============");
         String name = input.askString("Enter your name: ");
         int id = input.askInt("Enter your ID: ");
-        int password = input.askInt("Create password: ");
+        String password = input.askString("Create password: ");
         User user = new User(name, id);
         return menu.createAccount(user, password);
     }

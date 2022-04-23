@@ -2,9 +2,9 @@ package com.company;
 
 public class Account {
     private final User user;
-    private final int password;
+    private final String password;
 
-    public Account(User user, int password) {
+    public Account(User user, String password) {
         this.user = user;
         this.password = password;
     }
@@ -13,7 +13,7 @@ public class Account {
         return user;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 }

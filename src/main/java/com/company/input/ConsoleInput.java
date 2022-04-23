@@ -1,7 +1,5 @@
 package com.company.input;
 
-import com.company.input.Input;
-
 import java.util.Scanner;
 
 public class ConsoleInput implements Input {
@@ -17,5 +15,10 @@ public class ConsoleInput implements Input {
     @Override
     public int askInt(String question) {
         return Integer.parseInt(askString(question));
+    }
+
+    @Override
+    public double askDouble(String question) {
+        return Double.parseDouble(askString(question));
     }
 }

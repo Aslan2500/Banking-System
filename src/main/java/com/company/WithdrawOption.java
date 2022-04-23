@@ -19,6 +19,6 @@ public class WithdrawOption implements UserOption {
     public boolean execute(Input input, OptionsForAccount options, Account account) {
         out.println("=============Withdraw Money=============");
         int money = input.askInt("How much money would you like to withdraw: ");
-        return options.depositMoney(money, account);
+        return options.withdrawMoney(money, account);
     }
 }

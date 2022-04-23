@@ -10,6 +10,7 @@ import com.company.input.ValidateInput;
 import com.company.output.ConsoleOutput;
 import com.company.output.Output;
 import com.company.sql.SqlMenu;
+import com.company.sql.SqlOptions;
 
 import java.util.List;
 
@@ -20,8 +21,10 @@ public class Start {
         this.out = out;
     }
 
-    public void init(Input input, Menu memTracker, List<UserActionInMenu> actions) {
+    public void init(Input input, Menu memTracker, List<UserActionInMenu> actions,
+                     OptionsForAccount ofa, List<UserOption> options) {
         boolean run1 = true;
+        boolean run2 = true;
         Account account = null;
         while (run1) {
             this.showMenu(actions);
@@ -34,6 +37,16 @@ public class Start {
             account = action.execute(input, memTracker);
             run1 = false;
         }
+        while (run2) {
+            this.shoOptions(options);
+            int select = input.askInt("Select: ");
+            if (select < 0 || select >= options.size()) {
+                out.println("Wrong input, you can select: 0 .. " + (options.size() - 1));
+                continue;
+            }
+            UserOption option = options.get(select);
+            run2 = option.execute(input, ofa, account);
+        }
     }
 
     private void showMenu(List<UserActionInMenu> actions) {
@@ -43,16 +56,31 @@ public class Start {
         }
     }
 
+    private void shoOptions(List<UserOption> options) {
+        out.println("Options:");
+        for (int index = 0; index < options.size(); index++) {
+            out.println(index + ". " + options.get(index).name());
+        }
+    }
+
     public static void main(String[] args) {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
-        try (SqlMenu tracker = new SqlMenu()) {
+        try (SqlMenu tracker = new SqlMenu(); SqlOptions tracker1 = new SqlOptions()) {
             tracker.init();
             List<UserActionInMenu> actions = List.of(
                     new CreateAccountOption(output),
                     new EnterAccountOption(output)
             );
-            new Start(output).init(input, tracker, actions);
+            tracker1.init();
+            List<UserOption> options = List.of(
+                    new DepositOption(output),
+                    new WithdrawOption(output),
+                    new BuyCryptoOption(output),
+                    new SellCryptoOption(output),
+                    new ShowBalanceOption(output)
+            );
+            new Start(output).init(input, tracker,  actions, tracker1, options);
         } catch (Exception e) {
             e.printStackTrace();
         }

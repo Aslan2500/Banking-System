@@ -31,4 +31,19 @@ public class ValidateInput extends ConsoleInput {
         } while(flag);
         return rsl;
     }
+
+    @Override
+    public double askDouble(String question) {
+        boolean flag = true;
+        double rsl = 0;
+        do {
+            try {
+                rsl = input.askDouble(question);
+                flag = false;
+            } catch (NumberFormatException e) {
+                output.println("Please enter valid number!");
+            }
+        } while(flag);
+        return rsl;
+    }
 }
