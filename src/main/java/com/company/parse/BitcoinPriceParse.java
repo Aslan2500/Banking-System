@@ -1,21 +1,23 @@
 package com.company.parse;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 
-import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class BitcoinPriceParse implements Parse {
-    private static final String SOURCE_LINK = "https://api.coindesk.com/";
+    private static final String SOURCE_LINK = "https://api.coindesk.com/v1/bpi/currentprice.json";
 
-    private static final String PAGE_LINK = String.format("%s/v1/bpi/currentprice.json", SOURCE_LINK);
-
-    public static void main(String[] args) throws IOException {
-        Connection connection = Jsoup.connect(PAGE_LINK);
-        Document document = connection.get();
-        Elements rows = document.select("word-wrap: break-word; white-space: pre-wrap;");
-        System.out.println(rows.text());
+    public static float getPrice() {
+        float price = 0;
+        try {
+            String json = IOUtils.toString(new URL(SOURCE_LINK), StandardCharsets.UTF_8);
+            JSONObject jsonObject = new JSONObject(json);
+            price = jsonObject.getJSONObject("bpi").getJSONObject("USD").getFloat("rate_float");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return price;
     }
 }

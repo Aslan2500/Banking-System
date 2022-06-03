@@ -3,6 +3,7 @@ package com.company.options;
 import com.company.Account;
 import com.company.input.Input;
 import com.company.output.Output;
+import com.company.parse.BitcoinPriceParse;
 
 public class BuyCryptoOption implements UserOption {
     private final Output out;
@@ -20,7 +21,7 @@ public class BuyCryptoOption implements UserOption {
     public boolean execute(Input input, OptionsForAccount options, Account account) {
         out.println("=============Buy Crypto=============");
         int money = input.askInt("How much money would you like to spend: ");
-        int price = input.askInt("Bitcoin price: ");
+        int price = (int) BitcoinPriceParse.getPrice();
         return options.buyCrypto(money, price, account);
     }
 }
