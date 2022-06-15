@@ -11,6 +11,8 @@ import com.company.options.*;
 import com.company.output.ConsoleOutput;
 import com.company.output.Output;
 import com.company.firstMenu.SqlMenu;
+import org.apache.log4j.Logger;
+import org.apache.log4j.varia.NullAppender;
 
 import java.util.List;
 
@@ -67,6 +69,8 @@ public class Start {
     }
 
     public static void main(String[] args) {
+        Logger.getRootLogger().removeAllAppenders();
+        Logger.getRootLogger().addAppender(new NullAppender());
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
         try (SqlMenu tracker = new SqlMenu(); SqlOptions tracker1 = new SqlOptions()) {

@@ -44,7 +44,7 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
                      cn.prepareStatement("UPDATE accounts set amountOfMoney = amountOfMoney + ? " +
                              "WHERE usersID = ?;")) {
             statement.setDouble(1, amountOfMoney);
-            statement.setInt(2, account.getUser().getId());
+            statement.setInt(2, account.getUser().getPassport());
             rsl = statement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
                              "WHERE amountOfMoney >= ? AND usersID = ?;")) {
             statement.setDouble(1, amountOfMoney);
             statement.setDouble(2, amountOfMoney);
-            statement.setInt(3, account.getUser().getId());
+            statement.setInt(3, account.getUser().getPassport());
             rsl = statement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
             statement.setDouble(2, amountOfMoney);
             statement.setDouble(3, bitcoinPrice);
             statement.setInt(4, amountOfMoney);
-            statement.setInt(5, account.getUser().getId());
+            statement.setInt(5, account.getUser().getPassport());
             rsl = statement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +98,7 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
             statement.setDouble(2, amountOfBitcoin);
             statement.setInt(3, bitcoinPrice);
             statement.setDouble(4, amountOfBitcoin);
-            statement.setInt(5, account.getUser().getId());
+            statement.setInt(5, account.getUser().getPassport());
             rsl = statement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,7 +113,7 @@ public class SqlOptions implements OptionsForAccount, AutoCloseable {
                      cn.prepareStatement("SELECT amountOfMoney, " +
                              "amountOfBitcoin FROM accounts " +
                              "WHERE usersID = ?;")) {
-            statement.setInt(1, account.getUser().getId());
+            statement.setInt(1, account.getUser().getPassport());
             statement.execute();
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
