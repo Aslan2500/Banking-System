@@ -11,9 +11,9 @@ public class Account {
     private int id;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
-    private final User user;
+    private User user;
     @Column(name = "password")
-    private final String password;
+    private String password;
     @Column(name = "amount_of_money")
     private int amountOfMoney;
     @Column(name = "amount_of_bitcoin")
@@ -22,6 +22,9 @@ public class Account {
     public Account(User user, String password) {
         this.user = user;
         this.password = password;
+    }
+
+    public Account() {
     }
 
     public User getUser() {

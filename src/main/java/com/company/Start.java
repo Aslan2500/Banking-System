@@ -74,7 +74,7 @@ public class Start {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
         try (SqlMenu tracker = new SqlMenu(); SqlOptions tracker1 = new SqlOptions()) {
-            tracker.init();
+//            tracker.init();
             List<UserActionInMenu> actions = List.of(
                     new CreateAccountOption(output),
                     new EnterAccountOption(output)

@@ -10,9 +10,9 @@ public class User {
     @Column(name = "id")
     private int id;
     @Column(name = "name")
-    private final String name;
+    private String name;
     @Column(name = "passport")
-    private final int passport;
+    private int passport;
 
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private Account account;
@@ -22,12 +22,19 @@ public class User {
         this.passport = passport;
     }
 
+    public User() {
+    }
+
     public String getName() {
         return name;
     }
 
     public int getPassport() {
         return passport;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

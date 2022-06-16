@@ -5,35 +5,13 @@ import com.company.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 
 public class SqlMenu implements Menu, AutoCloseable {
 
     private Connection cn;
 
     public SqlMenu() {
-    }
-
-    public SqlMenu(Connection cn) {
-        this.cn = cn;
-    }
-
-    public void init() {
-        try (InputStream in = SqlMenu.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
-            cn = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
     }
 
     @Override
@@ -66,55 +44,29 @@ public class SqlMenu implements Menu, AutoCloseable {
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
         Session session = null;
-        Account account = null;
+        Account account;
+        User tempUser;
         try {
-            session.get(User.class, user.getPassport());
-            session.createQuery("SELECT * FROM accounts WHERE usersID =  AND password = ?")
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            String hql1 = "SELECT u FROM User u WHERE passport = " + user.getPassport() + " AND name = '" + user.getName() + "'";
+            try {
+                tempUser = session.createQuery(hql1, User.class).getSingleResult();
+            } catch (Exception e){
+                throw new IllegalArgumentException("Wrong name or passport number");
+            }
+            String hql2 = "SELECT a FROM Account a WHERE users_id = " + tempUser.getId();
+            account = session.createQuery(hql2, Account.class).getSingleResult();
+            if (!account.getPassword().equals(password)) {
+                throw new IllegalArgumentException("Wrong password");
+            }
+            session.getTransaction().commit();
         } finally {
             factory.close();
             session.close();
         }
         return account;
     }
-
-//    @Override
-//    public Account createAccount(User user, String password) {
-//        Account account = null;
-//        try (PreparedStatement statement =
-//                     cn.prepareStatement("INSERT INTO accounts(name, usersID, password," +
-//                             " amountOfMoney, amountOfBitcoin) VALUES (?, ?, ?, 0, 0);")) {
-//            statement.setString(1, user.getName());
-//            statement.setInt(2, user.getId());
-//            statement.setString(3, password);
-//            statement.execute();
-//            account = new Account(user, password);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return account;
-//    }
-
-//    @Override
-//    public Account enterAccount(User user, String password) {
-//        Account account = null;
-//        try (PreparedStatement statement =
-//                     cn.prepareStatement("SELECT * FROM accounts WHERE usersID = ? AND password = ?;")) {
-//            statement.setInt(1, user.getPassport());
-//            statement.setString(2, password);
-//            try (ResultSet resultSet = statement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    account = new Account(
-//                            new User(
-//                                    resultSet.getString("name"),
-//                                    resultSet.getInt("usersID")),
-//                            resultSet.getString("password"));
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return account;
-//    }
 
     @Override
     public void close() throws Exception {
