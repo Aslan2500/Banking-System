@@ -1,7 +1,7 @@
 # Banking-System
 This program represents small Banking System with several options
 
-Program connected with PostgreSQL database, so each created account saves into the database
+Program connected with PostgreSQL database via Hibernate, so all data is stored in the database
 
 Current Bitcoin price parsed via https://api.coindesk.com/v1/bpi/currentprice.json
 
