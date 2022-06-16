@@ -1,136 +1,147 @@
 package com.company.options;
 
 import com.company.Account;
+import com.company.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-public class SqlOptions implements OptionsForAccount, AutoCloseable {
-
-    Connection cn;
-
-    public SqlOptions(Connection cn) {
-        this.cn = cn;
-    }
+public class SqlOptions implements OptionsForAccount {
 
     public SqlOptions() {
     }
 
-    public void init() {
-        try (InputStream in = SqlOptions.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
-            cn = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     @Override
     public boolean depositMoney(int amountOfMoney, Account account) {
-        boolean rsl = true;
-        try (PreparedStatement statement =
-                     cn.prepareStatement("UPDATE accounts set amount_of_money = amount_of_money + ? " +
-                             "WHERE users_id = ?;")) {
-            statement.setDouble(1, amountOfMoney);
-            statement.setInt(2, account.getUser().getId());
-            rsl = statement.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Account.class)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+        Session session = null;
+        int rsl = 0;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            String hql = "UPDATE Account SET amount_of_money = amount_of_money + " + amountOfMoney +
+                    " WHERE users_id = " + account.getUser().getId();
+            rsl = session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
         }
-        return !rsl;
+        return rsl != -1;
     }
 
     @Override
     public boolean withdrawMoney(int amountOfMoney, Account account) {
-        boolean rsl = true;
-        try (PreparedStatement statement =
-                     cn.prepareStatement("UPDATE accounts set amount_of_money = amount_of_money - ? " +
-                             "WHERE amount_of_money >= ? AND users_id = ?;")) {
-            statement.setDouble(1, amountOfMoney);
-            statement.setDouble(2, amountOfMoney);
-            statement.setInt(3, account.getUser().getId());
-            rsl = statement.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Account.class)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+        Session session = null;
+        int rsl = 0;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            String hql = "UPDATE Account SET amount_of_money = amount_of_money - " + amountOfMoney +
+                    " WHERE amount_of_money >= " + amountOfMoney +
+                    " AND users_id = " + account.getUser().getId();
+            rsl = session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
         }
-        return !rsl;
+        if (rsl == 0) {
+            throw new IllegalArgumentException("Not enough money");
+        }
+        return true;
     }
 
     @Override
-    public boolean buyCrypto(int amountOfMoney, int bitcoinPrice, Account account) {
-        boolean rsl = true;
-        try (PreparedStatement statement =
-                     cn.prepareStatement("UPDATE accounts set amount_of_money = amount_of_money - ?, " +
-                             "amount_of_bitcoin =amount_of_bitcoin + (? / ?) " +
-                             "WHERE amount_of_money >= ? AND users_id = ?;")) {
-            statement.setInt(1, amountOfMoney);
-            statement.setDouble(2, amountOfMoney);
-            statement.setDouble(3, bitcoinPrice);
-            statement.setInt(4, amountOfMoney);
-            statement.setInt(5, account.getUser().getId());
-            rsl = statement.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public boolean buyCrypto(int amountOfMoney, double bitcoinPrice, Account account) {
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Account.class)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+        Session session = null;
+        int rsl = 0;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            String hql = "UPDATE Account SET amount_of_money = amount_of_money - " + amountOfMoney + "" +
+                    ", amount_of_bitcoin = amount_of_bitcoin + " + (amountOfMoney / bitcoinPrice) +
+                    " WHERE amount_of_money >= " + amountOfMoney +
+                    " AND users_id = " + account.getUser().getId();
+            rsl = session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
         }
-        return !rsl;
+        if (rsl == 0) {
+            throw new IllegalArgumentException("Not enough money");
+        }
+        return true;
     }
 
     @Override
     public boolean sellCrypto(int bitcoinPrice, double amountOfBitcoin, Account account) {
-        boolean rsl = true;
-        try (PreparedStatement statement =
-                     cn.prepareStatement("UPDATE accounts set amount_of_bitcoin = amount_of_bitcoin - ?," +
-                             " amount_of_money = amount_of_money + (? * ?)" +
-                             " WHERE amount_of_bitcoin >= ? AND users_id = ?;")) {
-            statement.setDouble(1, amountOfBitcoin);
-            statement.setDouble(2, amountOfBitcoin);
-            statement.setInt(3, bitcoinPrice);
-            statement.setDouble(4, amountOfBitcoin);
-            statement.setInt(5, account.getUser().getId());
-            rsl = statement.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Account.class)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+        Session session = null;
+        int rsl = 0;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            String hql = "UPDATE Account SET amount_of_bitcoin = amount_of_bitcoin - " + amountOfBitcoin + "" +
+                    ", amount_of_money = amount_of_money + " + (amountOfBitcoin * bitcoinPrice) +
+                    " WHERE amount_of_bitcoin >= " + amountOfBitcoin +
+                    " AND users_id = " + account.getUser().getId();
+            rsl = session.createQuery(hql).executeUpdate();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
         }
-        return !rsl;
+        if (rsl == 0) {
+            throw new IllegalArgumentException("Not enough bitcoin");
+        }
+        return true;
     }
 
     @Override
     public List<String> showBalance(Account account) {
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Account.class)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+        Session session = null;
+        Account accTemp = null;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            String hql = "SELECT a FROM Account a WHERE users_id = " + account.getUser().getId();
+            accTemp = session.createQuery(hql, Account.class).getSingleResult();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
+        }
         List<String> list = new ArrayList<>();
-        try (PreparedStatement statement =
-                     cn.prepareStatement("SELECT amount_of_money, " +
-                             "amount_of_bitcoin FROM accounts " +
-                             "WHERE users_id = ?;")) {
-            statement.setInt(1, account.getUser().getId());
-            statement.execute();
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    list.add(String.valueOf(resultSet.getInt("amount_of_money")));
-                    list.add(String.valueOf(resultSet.getDouble("amount_of_bitcoin")));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        list.add(String.valueOf(accTemp.getAmountOfMoney()));
+        list.add(String.valueOf(accTemp.getAmountOfBitcoin()));
         return list;
-    }
-
-    @Override
-    public void close() throws Exception {
-        if (cn != null) {
-            cn.close();
-        }
     }
 }

@@ -5,11 +5,8 @@ import com.company.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import java.sql.*;
 
-public class SqlMenu implements Menu, AutoCloseable {
-
-    private Connection cn;
+public class SqlMenu implements Menu {
 
     public SqlMenu() {
     }
@@ -66,12 +63,5 @@ public class SqlMenu implements Menu, AutoCloseable {
             session.close();
         }
         return account;
-    }
-
-    @Override
-    public void close() throws Exception {
-        if (cn != null) {
-            cn.close();
-        }
     }
 }

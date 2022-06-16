@@ -9,8 +9,8 @@ import java.nio.charset.StandardCharsets;
 public class BitcoinPriceParse implements Parse {
     private static final String SOURCE_LINK = "https://api.coindesk.com/v1/bpi/currentprice.json";
 
-    public static float getPrice() {
-        float price = 0;
+    public static double getPrice() {
+        double price = 0.0;
         try {
             String json = IOUtils.toString(new URL(SOURCE_LINK), StandardCharsets.UTF_8);
             JSONObject jsonObject = new JSONObject(json);

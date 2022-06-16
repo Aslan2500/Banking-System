@@ -21,7 +21,7 @@ public class BuyCryptoOption implements UserOption {
     public boolean execute(Input input, OptionsForAccount options, Account account) {
         out.println("=============Buy Crypto=============");
         int money = input.askInt("How much money would you like to spend: ");
-        int price = (int) BitcoinPriceParse.getPrice();
+        double price = BitcoinPriceParse.getPrice();
         return options.buyCrypto(money, price, account);
     }
 }

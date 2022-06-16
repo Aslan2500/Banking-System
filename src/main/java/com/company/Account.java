@@ -17,7 +17,7 @@ public class Account {
     @Column(name = "amount_of_money")
     private int amountOfMoney;
     @Column(name = "amount_of_bitcoin")
-    private int amountOfBitcoin;
+    private double amountOfBitcoin;
 
     public Account(User user, String password) {
         this.user = user;
@@ -25,6 +25,14 @@ public class Account {
     }
 
     public Account() {
+    }
+
+    public int getAmountOfMoney() {
+        return amountOfMoney;
+    }
+
+    public double getAmountOfBitcoin() {
+        return amountOfBitcoin;
     }
 
     public User getUser() {
@@ -35,7 +43,7 @@ public class Account {
         this.amountOfMoney = amountOfMoney;
     }
 
-    public void setAmountOfBitcoin(int amountOfBitcoin) {
+    public void setAmountOfBitcoin(double amountOfBitcoin) {
         this.amountOfBitcoin = amountOfBitcoin;
     }
 

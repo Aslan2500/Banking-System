@@ -10,7 +10,7 @@ public interface OptionsForAccount {
 
     boolean withdrawMoney(int amountOfMoney, Account account);
 
-    boolean buyCrypto(int amountOfMoney, int bitcoinPrice, Account account);
+    boolean buyCrypto(int amountOfMoney, double bitcoinPrice, Account account);
 
     boolean sellCrypto(int bitcoinPrice, double amountOfBitcoin, Account account);
 

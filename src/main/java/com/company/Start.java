@@ -73,24 +73,20 @@ public class Start {
         Logger.getRootLogger().addAppender(new NullAppender());
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
-        try (SqlMenu tracker = new SqlMenu(); SqlOptions tracker1 = new SqlOptions()) {
-//            tracker.init();
-            List<UserActionInMenu> actions = List.of(
-                    new CreateAccountOption(output),
-                    new EnterAccountOption(output)
-            );
-            tracker1.init();
-            List<UserOption> options = List.of(
-                    new DepositOption(output),
-                    new WithdrawOption(output),
-                    new BuyCryptoOption(output),
-                    new SellCryptoOption(output),
-                    new ShowBalanceOption(output),
-                    new ExitOption(output)
-            );
-            new Start(output).init(input, tracker,  actions, tracker1, options);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SqlMenu tracker = new SqlMenu();
+        SqlOptions tracker1 = new SqlOptions();
+        List<UserActionInMenu> actions = List.of(
+                new CreateAccountOption(output),
+                new EnterAccountOption(output)
+        );
+        List<UserOption> options = List.of(
+                new DepositOption(output),
+                new WithdrawOption(output),
+                new BuyCryptoOption(output),
+                new SellCryptoOption(output),
+                new ShowBalanceOption(output),
+                new ExitOption(output)
+        );
+        new Start(output).init(input, tracker, actions, tracker1, options);
     }
 }
