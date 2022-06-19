@@ -1,11 +1,9 @@
 package com.company.options;
 
 import com.company.Account;
-import com.company.User;
+import com.company.SessionInit;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +14,9 @@ public class SqlOptions implements OptionsForAccount {
 
     @Override
     public boolean depositMoney(int amountOfMoney, Account account) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
-        int rsl = 0;
+        int rsl;
         try {
             session = factory.getCurrentSession();
             session.beginTransaction();
@@ -31,6 +25,7 @@ public class SqlOptions implements OptionsForAccount {
             rsl = session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
         } finally {
+            assert session != null;
             session.close();
             factory.close();
         }
@@ -39,13 +34,9 @@ public class SqlOptions implements OptionsForAccount {
 
     @Override
     public boolean withdrawMoney(int amountOfMoney, Account account) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
-        int rsl = 0;
+        int rsl;
         try {
             session = factory.getCurrentSession();
             session.beginTransaction();
@@ -55,6 +46,7 @@ public class SqlOptions implements OptionsForAccount {
             rsl = session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
         } finally {
+            assert session != null;
             session.close();
             factory.close();
         }
@@ -66,13 +58,9 @@ public class SqlOptions implements OptionsForAccount {
 
     @Override
     public boolean buyCrypto(int amountOfMoney, double bitcoinPrice, Account account) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
-        int rsl = 0;
+        int rsl;
         try {
             session = factory.getCurrentSession();
             session.beginTransaction();
@@ -83,6 +71,7 @@ public class SqlOptions implements OptionsForAccount {
             rsl = session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
         } finally {
+            assert session != null;
             session.close();
             factory.close();
         }
@@ -94,13 +83,9 @@ public class SqlOptions implements OptionsForAccount {
 
     @Override
     public boolean sellCrypto(int bitcoinPrice, double amountOfBitcoin, Account account) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
-        int rsl = 0;
+        int rsl;
         try {
             session = factory.getCurrentSession();
             session.beginTransaction();
@@ -111,6 +96,7 @@ public class SqlOptions implements OptionsForAccount {
             rsl = session.createQuery(hql).executeUpdate();
             session.getTransaction().commit();
         } finally {
+            assert session != null;
             session.close();
             factory.close();
         }
@@ -122,11 +108,7 @@ public class SqlOptions implements OptionsForAccount {
 
     @Override
     public List<String> showBalance(Account account) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
         Account accTemp = null;
         try {
@@ -136,6 +118,7 @@ public class SqlOptions implements OptionsForAccount {
             accTemp = session.createQuery(hql, Account.class).getSingleResult();
             session.getTransaction().commit();
         } finally {
+            assert session != null;
             session.close();
             factory.close();
         }

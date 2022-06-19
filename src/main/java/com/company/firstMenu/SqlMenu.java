@@ -1,10 +1,10 @@
 package com.company.firstMenu;
 
 import com.company.Account;
+import com.company.SessionInit;
 import com.company.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public class SqlMenu implements Menu {
 
@@ -13,11 +13,7 @@ public class SqlMenu implements Menu {
 
     @Override
     public Account createAccount(User user, String password) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
         Account account = null;
         try {
@@ -35,11 +31,7 @@ public class SqlMenu implements Menu {
 
     @Override
     public Account enterAccount(User user, String password) {
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
+        SessionFactory factory = SessionInit.getSessionFactory();
         Session session = null;
         Account account;
         User tempUser;
