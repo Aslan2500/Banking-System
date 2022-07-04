@@ -20,4 +20,4 @@ Then, program offer following options:
 5) Show balance - program shows how much money and Bitcoin you have on your account
 6) Exit - finishes program
 
-You can see Flowchart in order to see process is made. [Flowachar](Flowchart.jpg)
+You can see Flowchart in order to understanf how it all works. [Flowachar](Flowchart.jpg)
