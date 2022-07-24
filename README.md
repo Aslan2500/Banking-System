@@ -12,7 +12,7 @@ How user see program:
 Firstly, program offer customer to enter account or create new account if he/she doesn't have one
 These options requires - name, ID and password. 
 
-Then, program offer following options:
+Then program offer following options:
 1) Deposit money - program asks how much money you want to deposit
 2) Withdraw money - program asks how much money you want to withdraw (if you don't have enough money then nothing happens)
 3) Buy cryptocurrency - program asks how much money you want to spend from your account, Bitcoin price parsed automatically
